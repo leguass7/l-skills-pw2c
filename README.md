@@ -115,6 +115,15 @@ Com pacote instalado globalmente:
 
 O pacote inclui um catálogo de skills em `skills/`. Use `skills-pw2c skill list` para ver as instaladas e o MCP para descobrir as disponíveis.
 
+| id                           | nome                         | categoria | descrição                                                                                                                          |
+| ---------------------------- | ---------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `example-skill`              | Example Skill                | testing   | Skill inicial para validar instalação, atualização e descoberta via MCP.                                                           |
+| `docs-writer`                | Docs Writer                  | document  | Escreva, revise e edite arquivos de documentação estruturada.                                                                      |
+| `story-architect`            | Story Architect              | document  | Arquiteto de Requisitos e Librarian: planeja, fatia e documenta User Stories com metadados para o LightRAG.                        |
+| `pw2c-knowledge-base`        | PW2C Knowledge Base          | document  | Consulta e envia conhecimento à base PW2C (LightRAG). Use ao planejar, antes de codar ou ao consultar/indexar a base.              |
+| `component-architect`        | Component Architect          | frontend  | Especialista em engenharia de componentes React/Next.js com foco em DRY, reutilização e padrões SOLID.                             |
+| `component-architect-memory` | Component Architect (Memory) | frontend  | Como o Component Architect, com memória técnica (LightRAG) para consulta e indexação de componentes, hooks e utils entre projetos. |
+
 ---
 
 ## Contribuidores

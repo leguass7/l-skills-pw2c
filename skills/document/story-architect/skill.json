@@ -1,0 +1,19 @@
+{
+  "id": "story-architect",
+  "name": "Story Architect",
+  "version": "0.1.0",
+  "category": "document",
+  "description": "Atua como Arquiteto de Requisitos e Librarian. Planeja, fatia e documenta User Stories com metadados para o LightRAG. Use sempre ao criar novos requisitos, consultar regras de negócio existentes via MCP (pw2c_knowledge) ou indexar decisões de design para garantir que a implementação esteja alinhada à base de conhecimento da empresa.",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md",
+    "references/document-template.md",
+    "references/mcp-setup.md",
+    "references/stories-template.md"
+  ],
+  "tags": ["document", "user-stories", "cursor", "lightrag"],
+  "compatibility": {
+    "targets": ["cursor", "mcp"],
+    "minimumCliVersion": "0.1.0"
+  }
+}

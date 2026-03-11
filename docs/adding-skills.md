@@ -9,7 +9,8 @@ Este projeto foi estruturado para permitir que líderes técnicos adicionem nova
 3. Adicione o arquivo principal `SKILL.md`.
 4. Se necessário, crie `templates/` e `references/`.
 5. Registre a skill em `skills/registry.json`.
-6. Rode validação local:
+6. Atualize a seção **Catálogo** no [README.md](../README.md) com a nova skill: adicione uma linha na tabela com `id`, nome, categoria e descrição (resumida).
+7. Rode validação local:
 
 ```bash
 npm run lint
