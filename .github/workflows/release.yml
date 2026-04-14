@@ -63,10 +63,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Com registry-url no setup-node, o npm usa NODE_AUTH_TOKEN (documentação oficial do setup-node).
+      # Um token só de leitura ou granular sem "Write" costuma falhar com E404 no publish.
       - name: Publish to npm
         if: steps.changes.outputs.has_changes == 'true'
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
-          npm run release
+        run: npm run release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
