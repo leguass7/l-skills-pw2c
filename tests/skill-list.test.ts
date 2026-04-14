@@ -10,7 +10,7 @@ import { saveState } from "../src/core/state.js";
 import type { SkillState } from "../src/core/types.js";
 
 function createTempProjectDir(): string {
-  return mkdtempSync(join(tmpdir(), "skills-pw2c-skill-list-"));
+  return mkdtempSync(join(tmpdir(), "l-skills-pw2c-skill-list-"));
 }
 
 function removeTempProjectDir(dir: string): void {

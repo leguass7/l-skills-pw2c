@@ -15,7 +15,7 @@ import { loadState, saveState } from "../src/core/state.js";
 const tempDirectories: string[] = [];
 
 async function createTempProject(): Promise<string> {
-  const directory = await mkdtemp(join(tmpdir(), "skills-pw2c-"));
+  const directory = await mkdtemp(join(tmpdir(), "l-skills-pw2c-"));
   tempDirectories.push(directory);
   return directory;
 }

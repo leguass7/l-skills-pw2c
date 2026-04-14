@@ -25,7 +25,7 @@ describe("mcp server", () => {
   it("expõe as ferramentas principais do catálogo", async () => {
     const server = createMcpServer() as TestMcpServer;
     const client = new Client({
-      name: "skills-pw2c-test-client",
+      name: "l-skills-pw2c-test-client",
       version: "0.1.0",
     });
     const [clientTransport, serverTransport] =

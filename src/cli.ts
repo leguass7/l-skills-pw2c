@@ -18,7 +18,7 @@ if (
   // Mantemos apenas o log em modo debug para futura investigação, sem bloquear a execução.
 
   console.error(
-    `[skills-pw2c][debug] entrypoint loaded\n` +
+    `[l-skills-pw2c][debug] entrypoint loaded\n` +
       `  scriptPath: ${scriptPath}\n` +
       `  argv[0]: ${process.argv[0]}\n` +
       `  argv[1]: ${process.argv[1]}\n`,

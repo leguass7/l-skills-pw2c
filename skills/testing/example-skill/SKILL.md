@@ -1,6 +1,6 @@
 # Example Skill
 
-Use esta skill para validar rapidamente o fluxo do `skills-pw2c`.
+Use esta skill para validar rapidamente o fluxo do `l-skills-pw2c`.
 
 ## Objetivo
 

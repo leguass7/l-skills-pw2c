@@ -57,11 +57,11 @@ function loadPackageMetadata(): PackageMetadata {
     readFileSync(packageJsonPath, "utf8"),
   ) as RawPackageJson;
 
-  const packageName = packageJson.name ?? "skills-pw2c";
+  const packageName = packageJson.name ?? "l-skills-pw2c";
   const commandName =
     typeof packageJson.bin === "string"
-      ? (packageName.split("/").at(-1) ?? "skills-pw2c")
-      : (Object.keys(packageJson.bin ?? {})[0] ?? "skills-pw2c");
+      ? (packageName.split("/").at(-1) ?? "l-skills-pw2c")
+      : (Object.keys(packageJson.bin ?? {})[0] ?? "l-skills-pw2c");
 
   return {
     packageName,
@@ -88,7 +88,7 @@ export function resolvePaths(options: RuntimeOptions = {}): ResolvedPaths {
   const stateFile = resolve(
     options.stateFile ??
       process.env.LPW2C_STATE_FILE ??
-      join(workspaceDir, ".cursor", "skills-pw2c", "state.json"),
+      join(workspaceDir, ".cursor", "l-skills-pw2c", "state.json"),
   );
 
   return {

@@ -19,7 +19,7 @@ function createIoBuffer(): {
 }
 
 async function createTempProject(): Promise<string> {
-  const directory = await mkdtemp(join(tmpdir(), "skills-pw2c-cli-"));
+  const directory = await mkdtemp(join(tmpdir(), "l-skills-pw2c-cli-"));
   tempDirectories.push(directory);
   return directory;
 }

@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-/** Raiz do repositório skills-pw2c (…/tests/e2e → …/). */
+/** Raiz do repositório l-skills-pw2c (…/tests/e2e → …/). */
 export const repoRoot = join(__dirname, "..", "..");
 
 const distCli = join(repoRoot, "dist", "cli.js");

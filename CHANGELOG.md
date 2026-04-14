@@ -1,4 +1,4 @@
-# skills-pw2c
+# l-skills-pw2c
 
 ## 1.1.0
 

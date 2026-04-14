@@ -65,7 +65,7 @@ Cada entrada do `skills/registry.json` deve apontar para o `skill.json` correspo
 Quando o dev roda:
 
 ```bash
-skills-pw2c skill install example-skill
+l-skills-pw2c skill install example-skill
 ```
 
 o conteúdo da pasta da skill é copiado para:
@@ -74,7 +74,7 @@ o conteúdo da pasta da skill é copiado para:
 
 O estado da instalação é salvo em:
 
-`<projeto>/.cursor/skills-pw2c/state.json`
+`<projeto>/.cursor/l-skills-pw2c/state.json`
 
 ## Evolução futura
 

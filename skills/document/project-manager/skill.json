@@ -3,7 +3,7 @@
   "name": "Project Manager",
   "version": "0.1.5",
   "category": "document",
-  "description": "Gestão de projeto em Markdown (Obsidian-friendly) com modos Ágil e Completo, fases 1–6, backlog Epic→Story→Task→Subtask, UST (MCP + catálogo fallback), revisão técnica, briefing pós-Fase 5, glossário, gates de complexidade (in dubio pro-revisio), e push/sync ClickUp via MCP. Controlo em docs/project-manager/ apenas (sem docs/specs/). Validação mecânica via skills-pw2c pm-lint (references/pm-lint-cli.md). O pacote inclui SKILL.md, templates e guias operacionais — não inclui specs de planeamento do repositório skills-pw2c.",
+  "description": "Gestão de projeto em Markdown (Obsidian-friendly) com modos Ágil e Completo, fases 1–6, backlog Epic→Story→Task→Subtask, UST (MCP + catálogo fallback), revisão técnica, briefing pós-Fase 5, glossário, gates de complexidade (in dubio pro-revisio), e push/sync ClickUp via MCP. Controlo em docs/project-manager/ apenas (sem docs/specs/). Validação mecânica via l-skills-pw2c pm-lint (references/pm-lint-cli.md). O pacote inclui SKILL.md, templates e guias operacionais — não inclui specs de planeamento do repositório l-skills-pw2c.",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md",

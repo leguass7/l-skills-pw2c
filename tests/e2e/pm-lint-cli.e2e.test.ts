@@ -37,7 +37,7 @@ afterEach(async () => {
   );
 });
 
-describe("e2e: skills-pw2c pm-lint (dist/cli.js)", () => {
+describe("e2e: l-skills-pw2c pm-lint (dist/cli.js)", () => {
   beforeAll(async () => {
     const ok = await distCliExists();
     if (!ok) {
@@ -105,6 +105,6 @@ describe("e2e: skills-pw2c pm-lint (dist/cli.js)", () => {
   it("invocação igual ao binário publicado (node dist/cli.js)", () => {
     const { code, stdout } = runDistCli(["--help"], { cwd: repoRoot });
     expect(code).toBe(0);
-    expect(stdout).toContain("skills-pw2c");
+    expect(stdout).toContain("l-skills-pw2c");
   });
 });

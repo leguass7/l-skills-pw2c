@@ -32,7 +32,7 @@ export function createProgram(io: CommandIo = defaultIo): Command {
 
   program
     .name(metadata.commandName)
-    .description("Gerencia skills da HealthDev e expõe um servidor MCP local.")
+    .description("Gerencia skills PW2C e expõe um servidor MCP local.")
     .version(metadata.version)
     .configureOutput({
       writeErr: (text) => io.stderr(text),
@@ -72,7 +72,7 @@ export async function runCli(
           : JSON.stringify(error);
 
       io.stderr(
-        `[skills-pw2c][debug] command failed\n` +
+        `[l-skills-pw2c][debug] command failed\n` +
           `  platform: ${process.platform}\n` +
           `  argv: ${JSON.stringify(argv)}\n` +
           `  error: ${details}\n`,
