@@ -9,6 +9,7 @@ coverage
 .vscode
 
 docs/dev
+docs/specs
 
 # env / secrets
 .env

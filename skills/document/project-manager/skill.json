@@ -1,0 +1,39 @@
+{
+  "id": "project-manager",
+  "name": "Project Manager",
+  "version": "0.1.5",
+  "category": "document",
+  "description": "Gestão de projeto em Markdown (Obsidian-friendly) com modos Ágil e Completo, fases 1–6, backlog Epic→Story→Task→Subtask, UST (MCP + catálogo fallback), revisão técnica, briefing pós-Fase 5, glossário, gates de complexidade (in dubio pro-revisio), e push/sync ClickUp via MCP. Controlo em docs/project-manager/ apenas (sem docs/specs/). Validação mecânica via skills-pw2c pm-lint (references/pm-lint-cli.md). O pacote inclui SKILL.md, templates e guias operacionais — não inclui specs de planeamento do repositório skills-pw2c.",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md",
+    "references/Boas_Praticas_Historias_de_Utilizador.md",
+    "references/Briefing_Execucao_Fase5.md",
+    "references/clickup-mcp-push.md",
+    "references/Company_Backend_Golden_Rules_Template.md",
+    "references/Company_Frontend_Golden_Rules_Template.md",
+    "references/Guia_Nota_Tecnica_em_Tasks.md",
+    "references/Guia_Revisao_Tecnica_Fase5.md",
+    "references/pm-lint-cli.md",
+    "references/Template_Checklist_Revisao_tecnica.md",
+    "references/Template_Glossario.md",
+    "references/Template_Story.md",
+    "references/Template_Subtask.md",
+    "references/Template_Task.md",
+    "references/UST_Catalog.md"
+  ],
+  "tags": [
+    "document",
+    "project-management",
+    "markdown",
+    "obsidian",
+    "ust",
+    "cursor",
+    "mcp",
+    "clickup"
+  ],
+  "compatibility": {
+    "targets": ["cursor", "mcp"],
+    "minimumCliVersion": "0.1.0"
+  }
+}

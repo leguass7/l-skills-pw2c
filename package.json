@@ -31,11 +31,13 @@
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "test:e2e": "npm run build && vitest run --config vitest.e2e.config.ts",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ci": "vitest run --reporter=dot",
     "package:check": "npm pack --dry-run",
     "test:all": "npm run format && npm run lint --fix && npm run typecheck && npm run test && npm run build",
+    "pm-lint": "tsx src/cli.ts pm-lint",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish"

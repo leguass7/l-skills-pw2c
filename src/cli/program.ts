@@ -9,6 +9,7 @@ import {
   toCommonOptions,
   type RawOptionBag,
 } from "./options.js";
+import { registerPmLintCommand } from "../commands/pm-lint.js";
 import { registerSkillCommand } from "./skill.js";
 
 export const defaultIo: CommandIo = {
@@ -40,6 +41,7 @@ export function createProgram(io: CommandIo = defaultIo): Command {
     .exitOverride();
 
   registerSkillCommand(program, io);
+  registerPmLintCommand(program, io);
 
   applyCommonOptions(
     program

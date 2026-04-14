@@ -120,6 +120,7 @@ O pacote inclui um catálogo de skills em `skills/`. Use `skills-pw2c skill list
 | `example-skill`              | Example Skill                | testing   | Skill inicial para validar instalação, atualização e descoberta via MCP.                                                           |
 | `docs-writer`                | Docs Writer                  | document  | Escreva, revise e edite arquivos de documentação estruturada.                                                                      |
 | `story-architect`            | Story Architect              | document  | Arquiteto de Requisitos e Librarian: planeja, fatia e documenta User Stories com metadados para o LightRAG.                        |
+| `project-manager`            | Project Manager              | document  | Markdown/Obsidian, modos Ágil/Completo, fases, UST, ClickUp MCP; controlo só em `docs/project-manager/` (sem `docs/specs/`).       |
 | `pw2c-knowledge-base`        | PW2C Knowledge Base          | document  | Consulta e envia conhecimento à base PW2C (LightRAG). Use ao planejar, antes de codar ou ao consultar/indexar a base.              |
 | `component-architect`        | Component Architect          | frontend  | Especialista em engenharia de componentes React/Next.js com foco em DRY, reutilização e padrões SOLID.                             |
 | `component-architect-memory` | Component Architect (Memory) | frontend  | Como o Component Architect, com memória técnica (LightRAG) para consulta e indexação de componentes, hooks e utils entre projetos. |
@@ -184,10 +185,25 @@ Consulte [docs/adding-skills.md](docs/adding-skills.md) para o fluxo completo de
 
 ### Scripts
 
+Validação de `docs/project-manager` (convenções de nomes + links Markdown + wikilinks estilo Obsidian), para reduzir trabalho repetido no agente. O comando faz parte do binário **`skills-pw2c`** publicado no npm:
+
+```bash
+npx skills-pw2c pm-lint --root docs/project-manager
+npx skills-pw2c pm-lint --root docs/project-manager --fix
+npx skills-pw2c pm-lint --root docs/project-manager --json
+```
+
+No clone deste repositório em desenvolvimento:
+
+```bash
+npm run pm-lint -- --root docs/project-manager
+```
+
 ```bash
 npm run lint
 npm run typecheck
 npm test
+npm run test:e2e
 npm run build
 npm run package:check
 ```

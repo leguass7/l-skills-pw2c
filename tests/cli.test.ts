@@ -33,6 +33,17 @@ afterEach(async () => {
 });
 
 describe("cli", () => {
+  it("expõe o comando pm-lint na ajuda", async () => {
+    const ioBuffer = createIoBuffer();
+    const exitCode = await runCli(["pm-lint", "--help"], {
+      stdout: (text) => ioBuffer.stdout.push(text),
+      stderr: (text) => ioBuffer.stderr.push(text),
+    });
+
+    expect(exitCode).toBe(0);
+    expect(ioBuffer.stdout.join("")).toContain("pm-lint");
+  });
+
   it("lista skills em json", async () => {
     const ioBuffer = createIoBuffer();
     const exitCode = await runCli(["skill", "list", "--json"], {
