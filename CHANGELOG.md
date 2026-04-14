@@ -1,5 +1,11 @@
 # l-skills-pw2c
 
+## 1.2.0
+
+### Minor Changes
+
+- d5df8d8: Adiciona a skill `clickup-ust-template` para criar e preencher tarefas ClickUp no padrão UST, com referência de API, catálogo de códigos e scripts de sincronização de campos na lista.
+
 ## 1.1.0
 
 ### Minor Changes

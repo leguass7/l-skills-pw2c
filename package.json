@@ -1,6 +1,6 @@
 {
   "name": "l-skills-pw2c",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "CLI para instalar, listar, atualizar e expor skills PW2C para agentes de IA.",
   "type": "module",
   "bin": {
