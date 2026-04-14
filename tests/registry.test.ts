@@ -8,7 +8,7 @@ import {
   validateRegistry,
 } from "../src/core/registry.js";
 
-const registryLength = 7;
+const registryLength = 8;
 
 describe("skill registry", () => {
   it("carrega e valida o catálogo padrão", async () => {

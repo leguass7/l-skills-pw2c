@@ -1,0 +1,444 @@
+{
+  "meta": {
+    "schema": "ust-codigo-catalog-v1",
+    "description": "Apenas o catálogo de opções do dropdown Código da UST. Os outros 6 campos do padrão UST estão em clickup-template.md e SKILL.md; sync-fields.mjs monta os POST a partir desta lista + definições fixas.",
+    "option_count": 87
+  },
+  "codigo_ust_options": [
+    {
+      "name": "D.1",
+      "color": "#f900ea",
+      "orderindex": 0
+    },
+    {
+      "name": "D.2",
+      "color": "#f900ea",
+      "orderindex": 1
+    },
+    {
+      "name": "D.3",
+      "color": "#f900ea",
+      "orderindex": 2
+    },
+    {
+      "name": "D.4",
+      "color": "#f900ea",
+      "orderindex": 3
+    },
+    {
+      "name": "D.5",
+      "color": "#f900ea",
+      "orderindex": 4
+    },
+    {
+      "name": "D.6",
+      "color": "#f900ea",
+      "orderindex": 5
+    },
+    {
+      "name": "D.7",
+      "color": "#f900ea",
+      "orderindex": 6
+    },
+    {
+      "name": "D.8",
+      "color": "#f900ea",
+      "orderindex": 7
+    },
+    {
+      "name": "D.9",
+      "color": "#f900ea",
+      "orderindex": 8
+    },
+    {
+      "name": "D.10",
+      "color": "#f900ea",
+      "orderindex": 9
+    },
+    {
+      "name": "A.1",
+      "color": "#AF7E2E",
+      "orderindex": 10
+    },
+    {
+      "name": "A.2",
+      "color": "#AF7E2E",
+      "orderindex": 11
+    },
+    {
+      "name": "A.4",
+      "color": "#AF7E2E",
+      "orderindex": 12
+    },
+    {
+      "name": "A.5",
+      "color": "#AF7E2E",
+      "orderindex": 13
+    },
+    {
+      "name": "A.6",
+      "color": "#AF7E2E",
+      "orderindex": 14
+    },
+    {
+      "name": "A.7",
+      "color": "#AF7E2E",
+      "orderindex": 15
+    },
+    {
+      "name": "A.8",
+      "color": "#AF7E2E",
+      "orderindex": 16
+    },
+    {
+      "name": "A.9",
+      "color": "#AF7E2E",
+      "orderindex": 17
+    },
+    {
+      "name": "A.10",
+      "color": "#AF7E2E",
+      "orderindex": 18
+    },
+    {
+      "name": "A.11",
+      "color": "#AF7E2E",
+      "orderindex": 19
+    },
+    {
+      "name": "P.1",
+      "color": "#1bbc9c",
+      "orderindex": 20
+    },
+    {
+      "name": "P.2",
+      "color": "#1bbc9c",
+      "orderindex": 21
+    },
+    {
+      "name": "P.3",
+      "color": "#1bbc9c",
+      "orderindex": 22
+    },
+    {
+      "name": "P.4",
+      "color": "#1bbc9c",
+      "orderindex": 23
+    },
+    {
+      "name": "P.5",
+      "color": "#1bbc9c",
+      "orderindex": 24
+    },
+    {
+      "name": "P.6",
+      "color": "#1bbc9c",
+      "orderindex": 25
+    },
+    {
+      "name": "P.9",
+      "color": "#1bbc9c",
+      "orderindex": 26
+    },
+    {
+      "name": "P.10",
+      "color": "#1bbc9c",
+      "orderindex": 27
+    },
+    {
+      "name": "P.11",
+      "color": "#1bbc9c",
+      "orderindex": 28
+    },
+    {
+      "name": "P.12",
+      "color": "#1bbc9c",
+      "orderindex": 29
+    },
+    {
+      "name": "P.13",
+      "color": "#1bbc9c",
+      "orderindex": 30
+    },
+    {
+      "name": "P.14",
+      "color": "#1bbc9c",
+      "orderindex": 31
+    },
+    {
+      "name": "P.15",
+      "color": "#1bbc9c",
+      "orderindex": 32
+    },
+    {
+      "name": "T.1",
+      "color": "#ff7800",
+      "orderindex": 33
+    },
+    {
+      "name": "T.2",
+      "color": "#ff7800",
+      "orderindex": 34
+    },
+    {
+      "name": "T.3",
+      "color": "#ff7800",
+      "orderindex": 35
+    },
+    {
+      "name": "H.1",
+      "color": "#667684",
+      "orderindex": 36
+    },
+    {
+      "name": "IM.1",
+      "color": "#0231E8",
+      "orderindex": 37
+    },
+    {
+      "name": "IM.2",
+      "color": "#0231E8",
+      "orderindex": 38
+    },
+    {
+      "name": "IM.3",
+      "color": "#0231E8",
+      "orderindex": 39
+    },
+    {
+      "name": "IM.4",
+      "color": "#0231E8",
+      "orderindex": 40
+    },
+    {
+      "name": "DOC.1",
+      "color": "#b5bcc2",
+      "orderindex": 41
+    },
+    {
+      "name": "DOC.2",
+      "color": "#b5bcc2",
+      "orderindex": 42
+    },
+    {
+      "name": "DOC.3",
+      "color": "#b5bcc2",
+      "orderindex": 43
+    },
+    {
+      "name": "DOC.4",
+      "color": "#b5bcc2",
+      "orderindex": 44
+    },
+    {
+      "name": "DOC.5",
+      "color": "#b5bcc2",
+      "orderindex": 45
+    },
+    {
+      "name": "DOC.6",
+      "color": "#b5bcc2",
+      "orderindex": 46
+    },
+    {
+      "name": "DOC.7",
+      "color": "#b5bcc2",
+      "orderindex": 47
+    },
+    {
+      "name": "IC.1",
+      "color": "#3082B7",
+      "orderindex": 48
+    },
+    {
+      "name": "IC.2",
+      "color": "#3082B7",
+      "orderindex": 49
+    },
+    {
+      "name": "IC.3",
+      "color": "#3082B7",
+      "orderindex": 50
+    },
+    {
+      "name": "IC.4",
+      "color": "#3082B7",
+      "orderindex": 51
+    },
+    {
+      "name": "IC.5",
+      "color": "#3082B7",
+      "orderindex": 52
+    },
+    {
+      "name": "IC.6",
+      "color": "#3082B7",
+      "orderindex": 53
+    },
+    {
+      "name": "IC.7",
+      "color": "#3082B7",
+      "orderindex": 54
+    },
+    {
+      "name": "PA.1",
+      "color": "#bf55ec",
+      "orderindex": 55
+    },
+    {
+      "name": "PA.2",
+      "color": "#bf55ec",
+      "orderindex": 56
+    },
+    {
+      "name": "PA.3",
+      "color": "#bf55ec",
+      "orderindex": 57
+    },
+    {
+      "name": "M.1",
+      "color": "#800000",
+      "orderindex": 58
+    },
+    {
+      "name": "M.2",
+      "color": "#800000",
+      "orderindex": 59
+    },
+    {
+      "name": "W.1",
+      "color": "#f9d900",
+      "orderindex": 60
+    },
+    {
+      "name": "W.2",
+      "color": "#f9d900",
+      "orderindex": 61
+    },
+    {
+      "name": "T.4",
+      "color": "#ff7800",
+      "orderindex": 62
+    },
+    {
+      "name": "ACC.1",
+      "color": "#FF4081",
+      "orderindex": 63
+    },
+    {
+      "name": "ACC.2",
+      "color": "#FF4081",
+      "orderindex": 64
+    },
+    {
+      "name": "ACC.3",
+      "color": "#FF4081",
+      "orderindex": 65
+    },
+    {
+      "name": "ACC.4",
+      "color": "#FF4081",
+      "orderindex": 66
+    },
+    {
+      "name": "ACC.5",
+      "color": "#FF4081",
+      "orderindex": 67
+    },
+    {
+      "name": "CON.1",
+      "color": "#04A9F4",
+      "orderindex": 68
+    },
+    {
+      "name": "CON.2",
+      "color": "#04A9F4",
+      "orderindex": 69
+    },
+    {
+      "name": "CON.3",
+      "color": "#04A9F4",
+      "orderindex": 70
+    },
+    {
+      "name": "CON.4",
+      "color": "#04A9F4",
+      "orderindex": 71
+    },
+    {
+      "name": "CON.5",
+      "color": "#04A9F4",
+      "orderindex": 72
+    },
+    {
+      "name": "CON.6",
+      "color": "#04A9F4",
+      "orderindex": 73
+    },
+    {
+      "name": "DB.1",
+      "color": "#E65100",
+      "orderindex": 74
+    },
+    {
+      "name": "DB.2",
+      "color": "#E65100",
+      "orderindex": 75
+    },
+    {
+      "name": "DB.3",
+      "color": "#E65100",
+      "orderindex": 76
+    },
+    {
+      "name": "DB.4",
+      "color": "#E65100",
+      "orderindex": 77
+    },
+    {
+      "name": "DB.5",
+      "color": "#E65100",
+      "orderindex": 78
+    },
+    {
+      "name": "DB.6",
+      "color": "#E65100",
+      "orderindex": 79
+    },
+    {
+      "name": "CF.1",
+      "color": "#7C4DFF",
+      "orderindex": 80
+    },
+    {
+      "name": "PL.1",
+      "color": "#3082B7",
+      "orderindex": 81
+    },
+    {
+      "name": "IM.6",
+      "color": "#5ECD84",
+      "orderindex": 82
+    },
+    {
+      "name": "h1",
+      "color": "#7D18BD",
+      "orderindex": 83
+    },
+    {
+      "name": "a,2",
+      "color": "#3737CC",
+      "orderindex": 84
+    },
+    {
+      "name": "h.q",
+      "color": "#382191",
+      "orderindex": 85
+    },
+    {
+      "name": "P1.",
+      "color": "#A4A5BD",
+      "orderindex": 86
+    }
+  ]
+}

@@ -13,7 +13,7 @@ export default tseslint.config(
   },
   js.configs.recommended,
   {
-    files: ["**/*.js"],
+    files: ["**/*.js", "**/*.mjs"],
     ...tseslint.configs.disableTypeChecked,
   },
   ...tseslint.configs.recommendedTypeChecked,
@@ -34,6 +34,20 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: false },
       ],
+    },
+  },
+  // Depois de recommendedTypeChecked: .mjs não tem project/tsconfig — desliga regras typed.
+  {
+    files: ["**/*.mjs"],
+    ...tseslint.configs.disableTypeChecked,
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        console: "readonly",
+        process: "readonly",
+        fetch: "readonly",
+      },
     },
   },
 );

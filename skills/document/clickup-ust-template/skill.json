@@ -1,0 +1,21 @@
+{
+  "id": "clickup-ust-template",
+  "name": "ClickUp UST Template",
+  "version": "0.1.1",
+  "category": "document",
+  "description": "Cria e preenche tarefas ClickUp no padrão UST (User Story): sete campos com nomes fixos, referência em clickup-template.md, catálogo Código da UST em codigo-ust-catalog.json, sync-fields.mjs para criar CFs na lista e wrappers opcionais (PowerShell e bash). Usa ao importar Markdown/Obsidian ou ao alinhar ao padrão UST/Mútua.",
+  "entry": "SKILL.md",
+  "files": [
+    "SKILL.md",
+    "clickup-template.md",
+    "scripts/sync-fields.mjs",
+    "scripts/codigo-ust-catalog.json",
+    "scripts/Sync-UserStoryFieldsToList.ps1",
+    "scripts/sync-user-story-fields-to-list.sh"
+  ],
+  "tags": ["document", "clickup", "ust", "api", "cursor", "mcp"],
+  "compatibility": {
+    "targets": ["cursor", "mcp"],
+    "minimumCliVersion": "0.1.0"
+  }
+}

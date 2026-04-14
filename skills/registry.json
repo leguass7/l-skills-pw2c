@@ -50,6 +50,14 @@
       "manifestPath": "document/pw2c-knowledge-base/skill.json"
     },
     {
+      "id": "clickup-ust-template",
+      "name": "ClickUp UST Template",
+      "version": "0.1.1",
+      "category": "document",
+      "description": "Cria e preenche tarefas ClickUp no padrão UST (User Story): sete campos com nomes fixos, referência em clickup-template.md, catálogo Código da UST em codigo-ust-catalog.json, sync-fields.mjs para criar CFs na lista e wrappers opcionais (PowerShell e bash). Usa ao importar Markdown/Obsidian ou ao alinhar ao padrão UST/Mútua.",
+      "manifestPath": "document/clickup-ust-template/skill.json"
+    },
+    {
       "id": "story-architect",
       "name": "Story Architect",
       "version": "0.1.0",

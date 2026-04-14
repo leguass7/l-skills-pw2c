@@ -124,6 +124,7 @@ O pacote inclui um catálogo de skills em `skills/`. Use `l-skills-pw2c skill li
 | `story-architect`            | Story Architect              | document  | Arquiteto de Requisitos e Librarian: planeja, fatia e documenta User Stories com metadados para o LightRAG.                        |
 | `project-manager`            | Project Manager              | document  | Markdown/Obsidian, modos Ágil/Completo, fases, UST, ClickUp MCP; controlo só em `docs/project-manager/` (sem `docs/specs/`).       |
 | `pw2c-knowledge-base`        | PW2C Knowledge Base          | document  | Consulta e envia conhecimento à base PW2C (LightRAG). Use ao planejar, antes de codar ou ao consultar/indexar a base.              |
+| `clickup-ust-template`       | ClickUp UST Template         | document  | Padrão UST no ClickUp: sete campos, payloads API, catálogo de códigos e scripts de sync de custom fields na lista.                 |
 | `component-architect`        | Component Architect          | frontend  | Especialista em engenharia de componentes React/Next.js com foco em DRY, reutilização e padrões SOLID.                             |
 | `component-architect-memory` | Component Architect (Memory) | frontend  | Como o Component Architect, com memória técnica (LightRAG) para consulta e indexação de componentes, hooks e utils entre projetos. |
 
