@@ -78,10 +78,40 @@ Os nomes abaixo correspondem a um servidor ClickUp MCP comum; **confirme** no de
 2. **Resolver identificadores:** `clickup_task_id`, `clickup_workspace_id` e/ou `clickup_url` no **frontmatter** do `.md` em `docs/project-manager/**` (quando o projeto os usar). Se faltar ID, **não** inventar: pedir ao utilizador ou usar `clickup_search` com critérios explícitos.
 3. **Parse de URL** (se o utilizador colar link `app.clickup.com`): extrair `task_id` (e `workspace_id` se existir no path); padrões variam — validar com o utilizador se ambíguo.
 4. **`clickup_get_task`:** obter estado atual e validar que a task existe. Ver **[Conflitos com o remoto]** abaixo se a descrição ou comentários não corresponderem ao Markdown local.
-5. **Propor alterações** ao utilizador: `status`, trecho de `markdown_description` ou resumo, texto de **comentário** (o que foi feito, PRs, critérios), e **custom fields** (UST) se `ust_code` / quantidades estiverem no frontmatter.
+5. **Propor alterações** ao utilizador: `status`, trecho de `markdown_description` ou resumo, texto de **comentário** (o que foi feito, PRs, critérios), e **custom fields** (UST) se `ust_code` / quantidades estiverem no frontmatter — desde que a nota respeite **atomicidade 1:1** (um `ust_code` por task); caso contrário, propor **split** antes de escrever UST (ver **Atomicidade UST** abaixo).
 6. **Gate humano:** o utilizador **confirma** explicitamente antes de **qualquer** escrita remota.
 7. **Executar:** `clickup_update_task` e/ou `clickup_create_task_comment`; para UST, primeiro `clickup_get_custom_fields` para mapear `id` dos campos.
 8. **Opcional:** após sucesso, o utilizador pode pedir para gravar `clickup_url` ou IDs no frontmatter local — só se política do projeto o permitir.
+
+### Títulos no ClickUp (harmonizar com Mútua / UST)
+
+Ao preparar o **nome** da task para `clickup_create_task` / `clickup_update_task` (e ao alinhar com o que se publica no ClickUp):
+
+1. **Remover** prefixos de controlo interno usados na árvore local ou em rascunhos: `EPIC NN -`, `STORY NN -`, `TASK NN -`, `SUBTASK NN -`, e variantes como `SUBTASK P.x -` quando forem apenas etiquetas de ficheiro/pasta — **não** devem aparecer no título **remoto**.
+2. O título **no ClickUp** deve ser **legível e orgânico**, alinhado à equipa. Exemplo de padrão guia: `USOff - backend - Nome da tarefa` — **sem** espaços ou caracteres especiais desnecessários no fim; evitar ruído visual no board e na faturação.
+3. **Classificação de stack obrigatória** no título (ou campo acordado no projeto): `backend` | `frontend` | `infra` | `story` | `docs` | `other`.
+4. **Dois níveis (local vs remoto):**
+   - **Ficheiros e pastas** no repositório podem manter as convenções da skill (`TASK NN - …`, árvore `Epics/…`) no **modo árvore**.
+   - O **título enviado ao ClickUp** é sempre derivado **sem** esses prefixos — é o que o utilizador e a equipa veem para trabalho e faturamento.
+
+### Hierarquia achatada (Mútua em andamento / US ou Task pai)
+
+**Gatilhos:** projeto **Mútua** em andamento **e** o utilizador forneceu URL/ID da **US pai** ou **Task pai** no ClickUp; **ou** pedido explícito de estrutura achatada.
+
+**Comportamento:**
+
+- **Não** criar no ClickUp uma hierarquia completa Epic → Story → Task intermédia quando o acordo for trabalhar só sob o pai: as **subtasks técnicas** (com UST) passam a ser **filhas directas** da **US/Task pai**, **todas ao mesmo nível** (achatadas).
+- **Local:** uma **pasta por funcionalidade** sob `docs/project-manager/`, com nome alinhado ao **título da US/Task pai** no ClickUp; dentro, ficheiros `USXX - [stack] - ….md` (ver **`references/Exemplo_Estrutura_Achatada.md`**). Não usar `Epics/…/Stories/…` para esse modo.
+- **MCP:** usar o schema local de `clickup_create_task` (ou equivalente) com **parent** = `task_id` da US/Task pai e lista/space correctos; confirmar IDs com o utilizador no **gate humano**.
+
+### Atomicidade UST (1:1) no push
+
+**Regra de ouro (faturamento):** uma task/subtask orçamentada no ClickUp deve corresponder a **um único** `codigo_ust` do catálogo — **proibido** agregar vários códigos distintos na mesma task (ex.: misturar P.3, P.4 e P.5 numa única linha de 11.5 UST).
+
+Antes de preencher **custom fields** de UST ou fechar o push:
+
+- Se o `.md` local descrever **mais de um** tipo de esforço/código UST para a mesma unidade, **não** enviar um valor agregado: o **gate humano** deve incluir um **plano de desmembramento** (várias tasks no ClickUp e, em modo achatado, vários `.md` na **pasta da funcionalidade** ou várias subtasks filhas da **US/Task pai**), cada uma com **um** `ust_code`.
+- Só depois do split alinhado é que se aplicam `clickup_update_task` / criação de tasks com UST por linha.
 
 ### Conflitos com o remoto (descrição e comentários)
 
@@ -110,3 +140,5 @@ Depois de `clickup_get_task`, comparar o remoto com o `.md` local:
 ## Import desde ClickUp (prioridade secundária)
 
 Quando o utilizador fornecer URL ou ID: ler task via MCP, decidir hierarquia (task única vs Task + Subtasks em Markdown), confirmar com o utilizador, depois usar os comandos `pm-new-*` da skill. Se a leitura MCP falhar, **não** inventar subtasks — seguir o modelo de campos e import/sync descritos no `SKILL.md` e neste ficheiro.
+
+Se o contexto for **modo achatado** (US/Task pai Mútua), preferir **pasta por funcionalidade** e ficheiros `USXX - [stack] - ….md` conforme **`references/Exemplo_Estrutura_Achatada.md`**.

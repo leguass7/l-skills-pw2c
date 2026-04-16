@@ -1,15 +1,16 @@
 {
   "id": "project-manager",
   "name": "Project Manager",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "category": "document",
-  "description": "Gestão de projeto em Markdown (Obsidian-friendly) com modos Ágil e Completo, fases 1–6, backlog Epic→Story→Task→Subtask, UST (MCP + catálogo fallback), revisão técnica, briefing pós-Fase 5, glossário, gates de complexidade (in dubio pro-revisio), e push/sync ClickUp via MCP. Controlo em docs/project-manager/ apenas (sem docs/specs/). Validação mecânica via l-skills-pw2c pm-lint (references/pm-lint-cli.md). O pacote inclui SKILL.md, templates e guias operacionais — não inclui specs de planeamento do repositório l-skills-pw2c.",
+  "description": "Gestão de projeto em Markdown (Obsidian-friendly) com modos Ágil e Completo, fases 1–6, backlog Epic→Story→Task→Subtask ou modo achatado Mútua (pasta por funcionalidade + USXX - [stack] - …, US/Task pai ClickUp), UST 1:1 por tarefa (MCP + catálogo), títulos ClickUp sem prefixos internos, revisão técnica, briefing pós-Fase 5, glossário, gates de complexidade (in dubio pro-revisio), push/sync ClickUp via MCP. Controlo em docs/project-manager/ apenas (sem docs/specs/). Validação mecânica via l-skills-pw2c pm-lint (references/pm-lint-cli.md). Inclui Exemplo_Estrutura_Achatada; não inclui specs de planeamento do repositório l-skills-pw2c.",
   "entry": "SKILL.md",
   "files": [
     "SKILL.md",
     "references/Boas_Praticas_Historias_de_Utilizador.md",
     "references/Briefing_Execucao_Fase5.md",
     "references/clickup-mcp-push.md",
+    "references/Exemplo_Estrutura_Achatada.md",
     "references/Company_Backend_Golden_Rules_Template.md",
     "references/Company_Frontend_Golden_Rules_Template.md",
     "references/Guia_Nota_Tecnica_em_Tasks.md",

@@ -1,13 +1,13 @@
 ---
 name: project-manager
-description: Gestão de projeto em Markdown (Obsidian-friendly) com modos Ágil e Completo, fases 1–6, backlog Epic→Story→Task→Subtask, UST (MCP + catálogo fallback), revisão técnica, briefing pós-Fase 5, glossário, gates de complexidade (in dubio pro-revisio), e push/sync ClickUp via MCP. Controlo em docs/project-manager/ apenas (sem docs/specs/). Validação mecânica via l-skills-pw2c pm-lint. O pacote inclui SKILL.md, templates e guias operacionais — não inclui specs de planeamento do repositório l-skills-pw2c.
+description: Gestão de projeto em Markdown (Obsidian-friendly) com modos Ágil e Completo, fases 1–6, backlog Epic→Story→Task→Subtask (ou modo achatado Mútua com pasta por funcionalidade e USXX - [stack] - …, alinhado à US/Task pai no ClickUp), UST 1:1 por tarefa (MCP + catálogo), títulos ClickUp sem prefixos internos, revisão técnica, briefing pós-Fase 5, glossário, gates de complexidade (in dubio pro-revisio), push/sync ClickUp via MCP. Controlo em docs/project-manager/ apenas (sem docs/specs/). Validação mecânica via l-skills-pw2c pm-lint. O pacote inclui SKILL.md, templates, Exemplo_Estrutura_Achatada e guias — não inclui specs de planeamento do repositório l-skills-pw2c.
 ---
 
 # SKILL: Project Manager (Markdown + fases + ClickUp MCP)
 
 ## [O QUE ESTE PACOTE É — E O QUE NÃO É]
 
-- **É (para o agente):** instruções neste `SKILL.md`, mais ficheiros em **`references/`** — templates (`Template_*`), guias (`Guia_*`, `Boas_Praticas_*`), golden rules (`Company_*_Golden_Rules_Template`), **`references/UST_Catalog.md`**, **`references/Briefing_Execucao_Fase5.md`**, **`references/Template_Glossario.md`**, **`references/clickup-mcp-push.md`** (MCP ClickUp) e **`references/pm-lint-cli.md`** (comando `l-skills-pw2c pm-lint`).
+- **É (para o agente):** instruções neste `SKILL.md`, mais ficheiros em **`references/`** — templates (`Template_*`), guias (`Guia_*`, `Boas_Praticas_*`), golden rules (`Company_*_Golden_Rules_Template`), **`references/UST_Catalog.md`**, **`references/Briefing_Execucao_Fase5.md`**, **`references/Template_Glossario.md`**, **`references/Exemplo_Estrutura_Achatada.md`** (modo backlog achatado: pasta por funcionalidade, `USXX - [stack] - …`, US/Task pai ClickUp), **`references/clickup-mcp-push.md`** (MCP ClickUp) e **`references/pm-lint-cli.md`** (comando `l-skills-pw2c pm-lint`).
 - **Não é:** cópia das **specs de planeamento** da skill (documentos longos tipo visão, fases completas, modelo ClickUp normativo). Esses vivem **só** no repositório **l-skills-pw2c** (pasta `docs/specs/project-manager/`) para humanos e para evoluir o produto; **não** vão para `.cursor/skills/project-manager/` na instalação.
 
 ## [CAMINHOS CANÓNICOS — SEM `docs/specs/`]
@@ -29,6 +29,8 @@ docs/project-manager/
 ```
 
 - **Referências transversais:** `NN-*.md` na raiz de `docs/project-manager/` quando existirem.
+
+**Modo achatado (excepção):** quando aplicável (projeto **Mútua** em andamento **com** US/Task pai no ClickUp, ou pedido explícito), **não** é obrigatória a árvore `Epics/…/Stories/…/Tasks/…`. As especificações com UST ficam por **funcionalidade**: uma **pasta** por entrega (nome alinhado ao **Task pai / US pai** no ClickUp) e ficheiros `USXX - [stack] - ….md` dentro dela — ver **`references/Exemplo_Estrutura_Achatada.md`**. Ficheiros só na **raiz** de `docs/project-manager/` (ex.: `00-Controle_de_Specs.md`) seguem `NN-*.md` para o `pm-lint` (avisos se o prefixo faltar).
 
 ## [TRIGGER]
 
@@ -86,6 +88,18 @@ A ordem acima **não** exige um **turno de conversa por ficheiro**. O agente pod
 
 Objetivo: menos ida-e-volta, **sem** relaxar a integridade da árvore.
 
+### Excepção — backlog achatado (Mútua / US ou Task pai ou pedido explícito)
+
+**Gatilhos:** (1) projeto **Mútua** já em **andamento** **e** o utilizador indicou uma **US pai** ou **Task pai** no ClickUp; **ou** (2) o utilizador pede explicitamente estrutura **achatada**.
+
+Nestes casos:
+
+- **Local:** **não** criar `Epics/…/Stories/…/Tasks/…/Subtasks/` para esse trabalho; usar **uma pasta por funcionalidade** sob `docs/project-manager/` (nome = funcionalidade / alinhado ao pai no ClickUp) e ficheiros **`USXX - [stack] - Título.md`** dentro dela, com UST e conteúdo técnico por ficheiro. Ver **`references/Exemplo_Estrutura_Achatada.md`**.
+- **ClickUp:** criar ou sincronizar subtasks **todas ao mesmo nível**, como **filhas directas** da **US/Task pai** — **sem** recriar Epic/Story/Task intermediárias no remoto quando o acordo for esse; o **nome da funcionalidade** no ClickUp (pai) espelha o **nome da pasta** local.
+- **Harmonização:** evitar árvore local profunda se o ClickUp estiver achatado sob um único pai; manter **1:1** entre ficheiros e tarefas orçamentadas quando aplicável.
+
+Fora destes gatilhos, prevalece a árvore típica e a **[ORDEM DE CRIAÇÃO]** acima.
+
 ## [ARRANQUE]
 
 1. Ler **`docs/project-manager/00-Controle_de_Specs.md`** (criar se faltar: bloco **Etapa atual** com Modo de operação, etapa, última atualização, resumo, próximo passo + **mapa de etapas** com checkboxes).
@@ -132,10 +146,16 @@ Ordem: **1** Contexto e visão → **1.1** Lacunas → **2** Especificar → **2
 | `pm-add-term`                         | Adicionar ou atualizar entrada em **`docs/project-manager/20-Dominios/Glossario.md`** (criar a partir de **`references/Template_Glossario.md`** se necessário); garantir nomenclatura única no domínio.                                         |
 | `pm-setup-rules`                      | **`references/Company_Backend_Golden_Rules_Template`**, **`Company_Frontend_Golden_Rules_Template`**; saída `02-Backend_Golden_Rules.md` / `03-Frontend_Golden_Rules.md` em `docs/project-manager/` + regras do agente (ex. `.cursor/rules/…`). |
 | `pm-budget-report`                    | Agregar UST das Subtasks em `docs/project-manager/**/*.md`.                                                                                                                                                                                     |
-| `pm-push-clickup` / `pm-sync-clickup` | **`references/clickup-mcp-push.md`**; gate humano antes de escrita remota.                                                                                                                                                                      |
+| `pm-push-clickup` / `pm-sync-clickup` | **`references/clickup-mcp-push.md`**; gate humano antes de escrita remota. Títulos remotos **sem** prefixos `EPIC`/`STORY`/`TASK`/`SUBTASK`; stack obrigatória; detalhes em **[PUSH/SYNC CLICKUP — TÍTULOS E UST]**.                            |
 | `pm-lint` (CLI)                       | Comando **`l-skills-pw2c pm-lint`** no repositório do produto; ver **`references/pm-lint-cli.md`**. Não é invocação simbólica do agente — é binário npm.                                                                                        |
 
 **Nomes:** prefixos `EPIC` / `STORY` / `TASK` / `SUBTASK` + `NN` (dois dígitos); **sem** `[` `]` nos nomes. **Renomear Epic:** usar fluxo em **Renomeação em cascata** (não depender só de edição manual ficheiro a ficheiro).
+
+## [PUSH/SYNC CLICKUP — TÍTULOS E UST]
+
+- **Título no ClickUp:** ao criar ou actualizar o nome da task remota, **remover** prefixos de controlo interno (`EPIC NN -`, `STORY NN -`, `TASK NN -`, `SUBTASK NN -`, etc.). O nome **remoto** deve ser legível e alinhado à equipa (ex.: `USOff - backend - Nome da tarefa`); **classificação de stack obrigatória:** `backend` | `frontend` | `infra` | `story` | `docs` | `other`.
+- **Local vs remoto:** no **modo árvore**, ficheiros e pastas podem manter `TASK NN - …`; o **título enviado ao ClickUp** é sempre derivado **sem** esses prefixos. No **modo achatado**, usar pasta por funcionalidade e `USXX - [stack] - ….md` (ver **`references/Exemplo_Estrutura_Achatada.md`**); o **pai** no ClickUp alinha com o **nome da pasta** (US/Task pai).
+- **Norma completa:** **`references/clickup-mcp-push.md`** (inclui hierarquia achatada, atomicidade UST no fluxo de escrita e conflitos com o remoto).
 
 ## [GATE: FASE 5 → FASE 6]
 
@@ -153,6 +173,7 @@ Sem avançar para execução como “revisão fechada” se `docs/project-manage
 2. **Fallback:** tabela local — copiar **`references/UST_Catalog.md`** para `docs/project-manager/UST_Catalog.md` (ou nome acordado) e manter códigos usados pelo projeto; ver instruções dentro desse ficheiro.
 3. **Falha total:** não inventar código; registar em `00-Ambiguidades.md` ou perguntar ao utilizador.
 4. Sugestão de código com **confirmação** explícita quando inferida; nunca gravar `ust_code` inventado.
+5. **Regra de ouro (faturamento — 1:1):** é **proibido** concentrar **vários** códigos UST **distintos** na mesma Subtask/Task no ClickUp. **Exemplo a evitar:** uma única tarefa de frontend “11.5 UST” que mistura P.3 (componente), P.4 (validação) e P.5 (lógica). Se o escopo exigir mais de um `ust_code`, o agente **deve desmembrar** em **várias** tarefas atómicas (cada uma com **um** `codigo_ust`), no ClickUp e, em modo achatado, em **vários** `.md` na pasta da funcionalidade ou várias subtasks filhas da **US/Task pai**. Ver fluxo de push em **`references/clickup-mcp-push.md`**.
 
 ## [PRIVACIDADE]
 
@@ -164,19 +185,20 @@ Opcional: **story-architect**, **pw2c-knowledge-base**.
 
 ## [REFERÊNCIA RÁPIDA — SÓ `references/` OPERACIONAIS]
 
-| Ficheiro                                               | Uso                                  |
-| ------------------------------------------------------ | ------------------------------------ |
-| `references/Template_Task.md`                          | Estrutura da Task                    |
-| `references/Template_Subtask.md`                       | Subtask + UST                        |
-| `references/Template_Story.md`                         | Story                                |
-| `references/Template_Glossario.md`                     | Base para `20-Dominios/Glossario.md` |
-| `references/Template_Checklist_Revisao_tecnica.md`     | Checklist Fase 5                     |
-| `references/Guia_Revisao_Tecnica_Fase5.md`             | Revisão técnica                      |
-| `references/Guia_Nota_Tecnica_em_Tasks.md`             | Nota técnica vs evidências           |
-| `references/Boas_Praticas_Historias_de_Utilizador.md`  | Stories / INVEST                     |
-| `references/Company_Backend_Golden_Rules_Template.md`  | `pm-setup-rules` backend             |
-| `references/Company_Frontend_Golden_Rules_Template.md` | `pm-setup-rules` frontend            |
-| `references/UST_Catalog.md`                            | Template catálogo UST + ordem MCP    |
-| `references/Briefing_Execucao_Fase5.md`                | Briefing pós-Fase 5                  |
-| `references/clickup-mcp-push.md`                       | MCP ClickUp, push/sync               |
-| `references/pm-lint-cli.md`                            | CLI `l-skills-pw2c pm-lint`          |
+| Ficheiro                                               | Uso                                                                        |
+| ------------------------------------------------------ | -------------------------------------------------------------------------- |
+| `references/Template_Task.md`                          | Estrutura da Task                                                          |
+| `references/Template_Subtask.md`                       | Subtask + UST                                                              |
+| `references/Template_Story.md`                         | Story                                                                      |
+| `references/Template_Glossario.md`                     | Base para `20-Dominios/Glossario.md`                                       |
+| `references/Template_Checklist_Revisao_tecnica.md`     | Checklist Fase 5                                                           |
+| `references/Guia_Revisao_Tecnica_Fase5.md`             | Revisão técnica                                                            |
+| `references/Guia_Nota_Tecnica_em_Tasks.md`             | Nota técnica vs evidências                                                 |
+| `references/Boas_Praticas_Historias_de_Utilizador.md`  | Stories / INVEST                                                           |
+| `references/Company_Backend_Golden_Rules_Template.md`  | `pm-setup-rules` backend                                                   |
+| `references/Company_Frontend_Golden_Rules_Template.md` | `pm-setup-rules` frontend                                                  |
+| `references/UST_Catalog.md`                            | Template catálogo UST + ordem MCP                                          |
+| `references/Briefing_Execucao_Fase5.md`                | Briefing pós-Fase 5                                                        |
+| `references/Exemplo_Estrutura_Achatada.md`             | Modo achatado: pasta por funcionalidade, `USXX - [stack] - …`, US/Task pai |
+| `references/clickup-mcp-push.md`                       | MCP ClickUp, push/sync                                                     |
+| `references/pm-lint-cli.md`                            | CLI `l-skills-pw2c pm-lint`                                                |
