@@ -52,13 +52,26 @@ describe("mcp server", () => {
       },
     });
 
+    const listTargetsResult = await client.callTool({
+      name: "list_targets",
+      arguments: {},
+    });
+
     expect(tools.tools.map((tool) => tool.name)).toEqual(
       expect.arrayContaining([
         "search_skills",
         "read_skill",
         "fetch_skill_files",
+        "list_skills",
+        "list_targets",
+        "install_skill",
+        "uninstall_skill",
+        "update_skill",
+        "list_installed_skills",
       ]),
     );
     expect(JSON.stringify(searchResult)).toContain("example-skill");
+    expect(JSON.stringify(listTargetsResult)).toContain("cursor");
+    expect(JSON.stringify(listTargetsResult)).toContain("gemini");
   });
 });

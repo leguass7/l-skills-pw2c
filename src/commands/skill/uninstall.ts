@@ -1,3 +1,4 @@
+import { assertNotMetaAllForNonInstallCommands } from "../../core/agent-targets.js";
 import { resolvePaths } from "../../core/config.js";
 import { uninstallSkill } from "../../core/installer.js";
 import { getInstalledSkillIdsByCategory } from "../../core/state.js";
@@ -21,6 +22,7 @@ export async function uninstallSkillCommand(
   skillId: string | undefined,
   options: CommonCommandOptions & { category?: string },
 ): Promise<UninstallCommandResultUnion> {
+  assertNotMetaAllForNonInstallCommands(options.target);
   const paths = resolvePaths(options);
 
   if (options.category !== undefined) {

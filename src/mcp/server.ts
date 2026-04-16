@@ -5,6 +5,13 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
+import { installSkillCommand } from "../commands/skill/install.js";
+import { listSkillsCommand } from "../commands/skill/list.js";
+import { getTargetListRows } from "../commands/skill/target-list.js";
+import { uninstallSkillCommand } from "../commands/skill/uninstall.js";
+import { updateSkillCommand } from "../commands/skill/update.js";
+import type { CommonCommandOptions } from "../commands/types.js";
+import type { RuntimeOptions } from "../core/config.js";
 import { getPackageMetadata, resolvePaths } from "../core/config.js";
 import {
   getSkillDescriptor,
@@ -32,12 +39,32 @@ async function collectDirectoryListing(
     .sort();
 }
 
-export function createMcpServer(projectDir?: string): McpServer {
+function mergeRuntimeOptions(
+  defaults: CommonCommandOptions,
+  overrides: RuntimeOptions,
+): RuntimeOptions {
+  return {
+    projectDir: overrides.projectDir ?? defaults.projectDir,
+    target: overrides.target ?? defaults.target,
+    installDir: overrides.installDir ?? defaults.installDir,
+    stateFile: overrides.stateFile ?? defaults.stateFile,
+  };
+}
+
+export function createMcpServer(
+  defaults: CommonCommandOptions = {},
+): McpServer {
   const metadata = getPackageMetadata();
-  const paths = resolvePaths({ projectDir });
   const server = new McpServer({
     name: metadata.packageName,
     version: metadata.version,
+  });
+
+  const pathsSchema = z.object({
+    projectDir: z.string().optional(),
+    target: z.string().optional(),
+    installDir: z.string().optional(),
+    stateFile: z.string().optional(),
   });
 
   server.registerTool(
@@ -46,10 +73,13 @@ export function createMcpServer(projectDir?: string): McpServer {
       description: "Busca skills pelo catálogo local.",
       inputSchema: {
         query: z.string().optional(),
+        ...pathsSchema.shape,
       },
     },
-    async ({ query }) => {
-      const skills = await searchSkills(paths.registryFile, query);
+    async (args) => {
+      const paths = resolvePaths(mergeRuntimeOptions(defaults, args));
+
+      const skills = await searchSkills(paths.registryFile, args.query);
 
       return {
         content: [
@@ -79,10 +109,15 @@ export function createMcpServer(projectDir?: string): McpServer {
       description: "Retorna o manifesto e o conteúdo principal de uma skill.",
       inputSchema: {
         skillId: z.string().min(1),
+        ...pathsSchema.shape,
       },
     },
-    async ({ skillId }) => {
-      const descriptor = await getSkillDescriptor(paths.registryFile, skillId);
+    async (args) => {
+      const paths = resolvePaths(mergeRuntimeOptions(defaults, args));
+      const descriptor = await getSkillDescriptor(
+        paths.registryFile,
+        args.skillId,
+      );
       const skillMarkdown = await readFile(
         getSkillEntryPath(descriptor),
         "utf8",
@@ -113,13 +148,18 @@ export function createMcpServer(projectDir?: string): McpServer {
       inputSchema: {
         skillId: z.string().min(1),
         mode: z.enum(["list", "all"]).default("list"),
+        ...pathsSchema.shape,
       },
     },
-    async ({ skillId, mode }) => {
-      const descriptor = await getSkillDescriptor(paths.registryFile, skillId);
+    async (args) => {
+      const paths = resolvePaths(mergeRuntimeOptions(defaults, args));
+      const descriptor = await getSkillDescriptor(
+        paths.registryFile,
+        args.skillId,
+      );
       const files = await collectDirectoryListing(descriptor.sourceDir);
 
-      if (mode === "list") {
+      if (args.mode === "list") {
         return {
           content: [
             {
@@ -154,9 +194,11 @@ export function createMcpServer(projectDir?: string): McpServer {
   server.registerTool(
     "list_skills",
     {
-      description: "Lista todas as skills do catálogo local.",
+      description:
+        "Lista todas as skills do catálogo local (metadados do registry).",
     },
     async () => {
+      const paths = resolvePaths(mergeRuntimeOptions(defaults, {}));
       const descriptors = await listSkillDescriptors(paths.registryFile);
 
       return {
@@ -174,11 +216,156 @@ export function createMcpServer(projectDir?: string): McpServer {
     },
   );
 
+  server.registerTool(
+    "list_targets",
+    {
+      description:
+        "Lista os ids de target (--target), pastas raiz e se entram em --target all.",
+    },
+    () => {
+      const rows = getTargetListRows();
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(rows, null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.registerTool(
+    "install_skill",
+    {
+      description:
+        "Instala uma skill no projeto (equivalente a skill install). Use target para o agente (cursor, gemini, all, …).",
+      inputSchema: {
+        skillId: z.string().optional(),
+        category: z.string().optional(),
+        ...pathsSchema.shape,
+      },
+    },
+    async (args) => {
+      const opts: CommonCommandOptions = {
+        ...mergeRuntimeOptions(defaults, args),
+      };
+      const withCategory =
+        typeof args.category === "string"
+          ? { ...opts, category: args.category }
+          : opts;
+
+      const result = await installSkillCommand(args.skillId, withCategory);
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.registerTool(
+    "uninstall_skill",
+    {
+      description:
+        "Remove uma skill instalada (equivalente a skill uninstall).",
+      inputSchema: {
+        skillId: z.string().optional(),
+        category: z.string().optional(),
+        ...pathsSchema.shape,
+      },
+    },
+    async (args) => {
+      const opts: CommonCommandOptions = {
+        ...mergeRuntimeOptions(defaults, args),
+      };
+      const withCategory =
+        typeof args.category === "string"
+          ? { ...opts, category: args.category }
+          : opts;
+
+      const result = await uninstallSkillCommand(args.skillId, withCategory);
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.registerTool(
+    "update_skill",
+    {
+      description:
+        "Atualiza uma skill instalada ou todas (equivalente a skill update).",
+      inputSchema: {
+        skillId: z.string().optional(),
+        all: z.boolean().optional(),
+        ...pathsSchema.shape,
+      },
+    },
+    async (args) => {
+      const result = await updateSkillCommand(args.skillId, {
+        ...mergeRuntimeOptions(defaults, args),
+        all: args.all === true,
+      });
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
+    },
+  );
+
+  server.registerTool(
+    "list_installed_skills",
+    {
+      description:
+        "Lista skills do catálogo com estado instalado/não instalado para o target (equivalente a skill list).",
+      inputSchema: {
+        query: z.string().optional(),
+        installed: z.boolean().optional(),
+        available: z.boolean().optional(),
+        ...pathsSchema.shape,
+      },
+    },
+    async (args) => {
+      const result = await listSkillsCommand(args.query, {
+        ...mergeRuntimeOptions(defaults, args),
+        installed: args.installed === true,
+        available: args.available === true,
+      });
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
+    },
+  );
+
   return server;
 }
 
-export async function startMcpServer(projectDir?: string): Promise<void> {
-  const server = createMcpServer(projectDir);
+export async function startMcpServer(
+  defaults: CommonCommandOptions = {},
+): Promise<void> {
+  const server = createMcpServer(defaults);
   const transport = new StdioServerTransport();
 
   await server.connect(transport);

@@ -6,6 +6,7 @@ export interface RawOptionBag {
   projectDir?: unknown;
   installDir?: unknown;
   stateFile?: unknown;
+  target?: unknown;
   json?: unknown;
   all?: unknown;
   installed?: unknown;
@@ -21,6 +22,7 @@ export function toCommonOptions(options: RawOptionBag): CommonCommandOptions {
       typeof options.installDir === "string" ? options.installDir : undefined,
     stateFile:
       typeof options.stateFile === "string" ? options.stateFile : undefined,
+    target: typeof options.target === "string" ? options.target : undefined,
     json: options.json === true,
   };
 }
@@ -30,6 +32,10 @@ export function applyCommonOptions(command: Command): Command {
     .option("--project-dir <path>", "Diretório do projeto alvo")
     .option("--install-dir <path>", "Diretório onde as skills serão instaladas")
     .option("--state-file <path>", "Arquivo de estado das skills instaladas")
+    .option(
+      "--target <name>",
+      "Agente alvo (cursor, claude, gemini, …; veja: skill target list)",
+    )
     .option("--json", "Retorna o resultado em JSON");
 }
 

@@ -68,13 +68,17 @@ Quando o dev roda:
 l-skills-pw2c skill install example-skill
 ```
 
-o conteúdo da pasta da skill é copiado para:
+o conteúdo da pasta da skill é copiado para o preset **cursor**:
 
 `<projeto>/.cursor/skills/example-skill`
 
 O estado da instalação é salvo em:
 
 `<projeto>/.cursor/l-skills-pw2c/state.json`
+
+Para outro agente (Gemini, Claude Code, etc.), usa-se **`--target <id>`**; a CLI copia para `<projeto>/<root>/skills/<skill-id>` e mantém o estado em `<projeto>/<root>/l-skills-pw2c/state.json`, onde `<root>` depende do preset (ver `l-skills-pw2c skill target list` ou o módulo `src/core/agent-targets.ts`).
+
+O servidor MCP expõe as mesmas operações (`install_skill`, `list_targets`, …) com os mesmos parâmetros de path e `target`.
 
 ## Evolução futura
 
@@ -83,4 +87,5 @@ A estrutura atual já suporta:
 - múltiplas categorias
 - dezenas de skills no mesmo pacote
 - uso pela CLI e pelo MCP com o mesmo catálogo
+- instalação por agente (`--target`) e meta-target `all` apenas em `skill install`
 - futura extração para monorepo com pacote `core`, `cli` e `mcp` separados

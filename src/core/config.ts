@@ -2,10 +2,19 @@ import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import {
+  assertKnownTarget,
+  assertResolvableTargetForPaths,
+  getAgentRootForResolvableTarget,
+  normalizeTargetId,
+} from "./agent-targets.js";
+
 export interface RuntimeOptions {
   projectDir?: string | undefined;
   installDir?: string | undefined;
   stateFile?: string | undefined;
+  /** Preset de agente (`cursor`, `gemini`, …). `LPW2C_TARGET` é usado se omitido. */
+  target?: string | undefined;
 }
 
 export interface PackageMetadata {
@@ -80,16 +89,51 @@ export function resolvePaths(options: RuntimeOptions = {}): ResolvedPaths {
   const workspaceDir = resolve(
     options.projectDir ?? process.env.LPW2C_PROJECT_DIR ?? process.cwd(),
   );
-  const installDir = resolve(
-    options.installDir ??
-      process.env.LPW2C_INSTALL_DIR ??
-      join(workspaceDir, ".cursor", "skills"),
+
+  const effectiveTarget = normalizeTargetId(
+    options.target ?? process.env.LPW2C_TARGET,
   );
-  const stateFile = resolve(
-    options.stateFile ??
-      process.env.LPW2C_STATE_FILE ??
-      join(workspaceDir, ".cursor", "l-skills-pw2c", "state.json"),
-  );
+  assertKnownTarget(effectiveTarget);
+  assertResolvableTargetForPaths(effectiveTarget);
+
+  const installDirFromOptions = options.installDir !== undefined;
+  const installDirFromEnv = process.env.LPW2C_INSTALL_DIR !== undefined;
+  const explicitInstallDir = installDirFromOptions || installDirFromEnv;
+
+  let installDir: string;
+  if (installDirFromOptions) {
+    installDir = resolve(options.installDir!);
+  } else if (installDirFromEnv) {
+    installDir = resolve(process.env.LPW2C_INSTALL_DIR!);
+  } else {
+    const root = getAgentRootForResolvableTarget(effectiveTarget);
+    if (!root) {
+      throw new Error("Invariante: target sem pasta raiz.");
+    }
+    installDir = resolve(join(workspaceDir, root, "skills"));
+  }
+
+  const stateFromOptions = options.stateFile !== undefined;
+  const stateFromEnv = process.env.LPW2C_STATE_FILE !== undefined;
+
+  let stateFile: string;
+  if (stateFromOptions) {
+    stateFile = resolve(options.stateFile!);
+  } else if (stateFromEnv) {
+    stateFile = resolve(process.env.LPW2C_STATE_FILE!);
+  } else if (explicitInstallDir) {
+    stateFile = resolve(
+      join(dirname(installDir), "l-skills-pw2c", "state.json"),
+    );
+  } else {
+    const root = getAgentRootForResolvableTarget(effectiveTarget);
+    if (!root) {
+      throw new Error("Invariante: target sem pasta raiz.");
+    }
+    stateFile = resolve(
+      join(workspaceDir, root, "l-skills-pw2c", "state.json"),
+    );
+  }
 
   return {
     ...metadata,

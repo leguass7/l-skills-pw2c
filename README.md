@@ -59,7 +59,7 @@ npx l-skills-pw2c skill list --json
 
 ## Onde as skills são instaladas
 
-Por padrão, a instalação acontece em:
+Por padrão (agente **cursor**), a instalação acontece em:
 
 `<projeto>/.cursor/skills/<skill-id>`
 
@@ -67,13 +67,38 @@ O arquivo de estado fica em:
 
 `<projeto>/.cursor/l-skills-pw2c/state.json`
 
-Esse arquivo funciona como um índice local das skills instaladas. Ele guarda metadados como `id`, `version`, `installedAt` e `category`, permitindo que a CLI saiba rapidamente o que está instalado para comandos como `skill list`, `skill update` e `skill update --all`.
+Para outro agente, use **`--target <id>`** (ou a variável **`LPW2C_TARGET`**). Cada preset usa uma pasta raiz `<root>` no projeto:
 
-Quando a última skill é removida, o `state.json` também é apagado. A pasta `.cursor/l-skills-pw2c` só é removida se estiver vazia, para não apagar arquivos extras adicionados manualmente.
+- skills: `<projeto>/<root>/skills/<skill-id>`
+- estado: `<projeto>/<root>/l-skills-pw2c/state.json`
+
+Lista de presets e pastas (mantida no código):
+
+```bash
+l-skills-pw2c skill target list
+l-skills-pw2c skill target list --json
+```
+
+Exemplos:
+
+```bash
+l-skills-pw2c skill install example-skill --target gemini
+l-skills-pw2c skill install example-skill --target all   # todos os presets marcados como incluídos em "all" (não inclui o preset genérico `agent`)
+```
+
+O meta-target **`all`** só é suportado em **`skill install`**. Nos outros comandos, use um target concreto (`cursor`, `gemini`, …).
+
+Se definires **`--install-dir`** ou **`LPW2C_INSTALL_DIR`** sem **`--state-file`** / **`LPW2C_STATE_FILE`**, o `state.json` é derivado automaticamente de `dirname(<install-dir>)` (ex.: `.gemini/skills` → `.gemini/l-skills-pw2c/state.json`).
+
+**Não** combines `--target all` com `--install-dir`, `--state-file` ou `LPW2C_INSTALL_DIR` / `LPW2C_STATE_FILE`.
+
+Esse arquivo de estado funciona como um índice local das skills instaladas por agente. Ele guarda metadados como `id`, `version`, `installedAt` e `category`, permitindo que a CLI saiba rapidamente o que está instalado para comandos como `skill list`, `skill update` e `skill update --all`.
+
+Quando a última skill é removida, o `state.json` também é apagado. A pasta `…/l-skills-pw2c` só é removida se estiver vazia, para não apagar arquivos extras adicionados manualmente.
 
 Se migraste do pacote antigo `skills-pw2c` (estado em `.cursor/skills-pw2c/`), copia `state.json` para `.cursor/l-skills-pw2c/` se quiseres manter o índice de skills instaladas.
 
-Opções da CLI para paths: `--project-dir`, `--install-dir`, `--state-file`. Variáveis de ambiente: `LPW2C_PROJECT_DIR`, `LPW2C_INSTALL_DIR`, `LPW2C_STATE_FILE`.
+Opções da CLI para paths: `--project-dir`, `--install-dir`, `--state-file`, `--target`. Variáveis de ambiente: `LPW2C_PROJECT_DIR`, `LPW2C_INSTALL_DIR`, `LPW2C_STATE_FILE`, `LPW2C_TARGET`. Ordem de precedência: valores passados na CLI sobrepõem o ambiente; `--install-dir` / `--state-file` explícitos sobrepõem o preset de `--target`.
 
 ## Comando MCP
 
@@ -83,7 +108,13 @@ O comando abaixo sobe um servidor MCP local via `stdio`:
 l-skills-pw2c mcp
 ```
 
-Ferramentas expostas: `search_skills`, `read_skill`, `fetch_skill_files`, `list_skills`.
+Ferramentas expostas:
+
+- Catálogo / leitura: `search_skills`, `read_skill`, `fetch_skill_files`, `list_skills`
+- Targets: `list_targets` (equivalente a `skill target list`)
+- Projeto: `install_skill`, `uninstall_skill`, `update_skill`, `list_installed_skills` (aceitam `projectDir`, `target`, `installDir`, `stateFile` com a mesma semântica da CLI)
+
+O comando `mcp` também aceita as opções comuns (`--project-dir`, `--target`, …) como predefinição para as ferramentas quando não forem passadas nos argumentos da chamada.
 
 ### Configuração no Cursor
 

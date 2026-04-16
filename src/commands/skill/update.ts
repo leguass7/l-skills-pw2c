@@ -1,3 +1,4 @@
+import { assertNotMetaAllForNonInstallCommands } from "../../core/agent-targets.js";
 import { resolvePaths } from "../../core/config.js";
 import { updateAllSkills, updateSkill } from "../../core/installer.js";
 import type { CommonCommandOptions } from "../types.js";
@@ -14,6 +15,7 @@ export async function updateSkillCommand(
   skillId: string | undefined,
   options: UpdateCommandOptions,
 ): Promise<UpdateCommandResult> {
+  assertNotMetaAllForNonInstallCommands(options.target);
   const paths = resolvePaths(options);
 
   if (options.all) {

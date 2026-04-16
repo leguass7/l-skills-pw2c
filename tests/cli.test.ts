@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from "node:fs/promises";
+import { access, mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
@@ -54,6 +54,65 @@ describe("cli", () => {
     expect(exitCode).toBe(0);
     expect(ioBuffer.stderr).toHaveLength(0);
     expect(ioBuffer.stdout.join("")).toContain("example-skill");
+  });
+
+  it("lista targets com skill target list", async () => {
+    const ioBuffer = createIoBuffer();
+    const exitCode = await runCli(["skill", "target", "list", "--json"], {
+      stdout: (text) => ioBuffer.stdout.push(text),
+      stderr: (text) => ioBuffer.stderr.push(text),
+    });
+
+    expect(exitCode).toBe(0);
+    const rows = JSON.parse(ioBuffer.stdout.join("")) as Array<{ id: string }>;
+    expect(Array.isArray(rows)).toBe(true);
+    expect(rows.map((r) => r.id)).toContain("cursor");
+    expect(rows.map((r) => r.id)).toContain("gemini");
+    expect(rows.map((r) => r.id)).toContain("all");
+  });
+
+  it("instala com --target gemini sob .gemini/skills", async () => {
+    const projectDir = await createTempProject();
+    const io = createIoBuffer();
+
+    const exitCode = await runCli(
+      [
+        "skill",
+        "install",
+        "example-skill",
+        "--project-dir",
+        projectDir,
+        "--target",
+        "gemini",
+      ],
+      {
+        stdout: (text) => io.stdout.push(text),
+        stderr: (text) => io.stderr.push(text),
+      },
+    );
+
+    expect(exitCode).toBe(0);
+    await expect(
+      access(
+        join(projectDir, ".gemini", "skills", "example-skill", "SKILL.md"),
+      ),
+    ).resolves.toBeUndefined();
+  });
+
+  it("rejeita --target all em skill list", async () => {
+    const projectDir = await createTempProject();
+    const io = createIoBuffer();
+
+    const exitCode = await runCli(
+      ["skill", "list", "--project-dir", projectDir, "--target", "all"],
+      {
+        stdout: (text) => io.stdout.push(text),
+        stderr: (text) => io.stderr.push(text),
+      },
+    );
+
+    expect(exitCode).toBe(1);
+    expect(io.stderr.join("")).toMatch(/all|suportado/i);
   });
 
   it("instala e remove uma skill usando diretórios temporários", async () => {

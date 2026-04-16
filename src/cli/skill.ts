@@ -2,15 +2,21 @@ import type { Command } from "commander";
 
 import { installSkillCommand } from "../commands/skill/install.js";
 import { listSkillsCommand } from "../commands/skill/list.js";
+import {
+  formatTargetListTable,
+  getTargetListRows,
+} from "../commands/skill/target-list.js";
 import { uninstallSkillCommand } from "../commands/skill/uninstall.js";
 import { updateSkillCommand } from "../commands/skill/update.js";
 import type { CommandIo } from "../commands/types.js";
 import { isInstallByCategory } from "./guards.js";
+import { isInstallMultiTarget } from "./guards.js";
 import { isUninstallByCategory } from "./guards.js";
 import {
   applyCommonOptions,
   type InstallCliOptions,
   type ListCliOptions,
+  type RawOptionBag,
   type UninstallCliOptions,
   type UpdateCliOptions,
   toCommonOptions,
@@ -21,6 +27,25 @@ export function registerSkillCommand(program: Command, io: CommandIo): void {
   const skillCommand = program
     .command("skill")
     .description("Gerencia skills locais");
+
+  const targetCommand = skillCommand
+    .command("target")
+    .description("Informação sobre agentes alvo (--target)");
+
+  applyCommonOptions(
+    targetCommand
+      .command("list")
+      .description("Lista ids de target e pastas raiz usadas na instalação")
+      .action((options: RawOptionBag) => {
+        const opts = toCommonOptions(options);
+        const rows = getTargetListRows();
+        if (opts.json) {
+          printJson(io, rows);
+          return;
+        }
+        io.stdout(formatTargetListTable(rows));
+      }),
+  );
 
   applyCommonOptions(
     skillCommand
@@ -39,6 +64,24 @@ export function registerSkillCommand(program: Command, io: CommandIo): void {
 
         if (options.json) {
           printJson(io, result);
+          return;
+        }
+
+        if (isInstallMultiTarget(result)) {
+          if ("category" in result) {
+            io.stdout(
+              `Categoria '${result.category}': ${result.results.length} instalação(ões) multi-target:\n`,
+            );
+          } else {
+            io.stdout(
+              `Skill '${result.skillId}' instalada em ${result.results.length} target(s):\n`,
+            );
+          }
+          for (const row of result.results) {
+            io.stdout(
+              `  [${row.target}] ${row.skillId} ${row.version} -> ${row.installPath}\n`,
+            );
+          }
           return;
         }
 

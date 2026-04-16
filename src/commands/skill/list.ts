@@ -1,3 +1,4 @@
+import { assertNotMetaAllForNonInstallCommands } from "../../core/agent-targets.js";
 import { resolvePaths } from "../../core/config.js";
 import { listSkillDescriptors, searchSkills } from "../../core/registry.js";
 import { loadState } from "../../core/state.js";
@@ -21,6 +22,7 @@ export async function listSkillsCommand(
   query: string | undefined,
   options: ListCommandOptions,
 ): Promise<ListedSkill[]> {
+  assertNotMetaAllForNonInstallCommands(options.target);
   const paths = resolvePaths(options);
   const [descriptors, state] = await Promise.all([
     query
