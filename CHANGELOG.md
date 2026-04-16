@@ -1,5 +1,11 @@
 # l-skills-pw2c
 
+## 1.2.1
+
+### Patch Changes
+
+- 1feed6e: Actualiza a skill `project-manager`: modo achatado Mútua com pasta por funcionalidade e ficheiros `USXX - [stack] - …`, títulos ClickUp sem prefixos internos, regra UST 1:1, novo `references/Exemplo_Estrutura_Achatada.md`, e alinhamento de `clickup-mcp-push.md` e templates.
+
 ## 1.2.0
 
 ### Minor Changes
